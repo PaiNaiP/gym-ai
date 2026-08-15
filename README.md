@@ -30,7 +30,3 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
-
-DATABASE_URL="postgresql://neondb_owner:npg_gGBpjFdu9b1L@ep-broad-sea-afu2coch-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
-DIRECT_URL="postgresql://neondb_owner:npg_gGBpjFdu9b1L@ep-broad-sea-afu2coch.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
