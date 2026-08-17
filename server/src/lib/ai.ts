@@ -37,7 +37,7 @@ export async function generateTrainingPlan(
 
     try {
         const completion = await openai.chat.completions.create({
-            model: "nvidia/nemotron-3.5-lightning:free",
+            model: "google/gemma-4-26b-a4b-it:free",
             messages:[
                 {
                     role: "system",
@@ -186,6 +186,6 @@ function buildPrompt(profile:UserProfile):string{
         - Provide exercise alternatives where appropriate
         - Make it progressive and suitable for ${experienceMap[profile.experience] || profile.experience} level
 
-        Return ONLY the JSON object (no markdown, no extra text).
+        Return ONLY the JSON object (no markdown, no extra text) on Russian.
         `;
 }

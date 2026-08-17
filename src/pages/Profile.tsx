@@ -1,12 +1,14 @@
 import { Navigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { Button } from "../components/ui/Button";
-import { Calendar, Dumbbell, RefreshCcw, Target, TrendingUp } from "lucide-react";
+import { Calendar, Dumbbell, Loader2, RefreshCcw, Target, TrendingUp } from "lucide-react";
 import { Card } from "../components/ui/Card";
 import { PlanDisplay } from "../components/plan/PlanDisplay";
+import { useState } from "react";
 
 export default function Profile() {
   const {user, isLoading, plan, generatePlan} = useAuth();
+  const [isGenerating, setIsGenerating] = useState(false);
   
   if(!user && !isLoading){
     return <Navigate to="/auth/sign-in" replace />
@@ -26,78 +28,105 @@ export default function Profile() {
     });
   }
 
+  const handleRegenerate= async() =>{
+    setIsGenerating(true);
+    try {
+      await generatePlan();
+    } catch (error) {
+      console.error("Ошибка при генерации плана:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  }
+
+
   return (
     <div className="min-h-screen pt-24 pb-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-bold-mb-1">Ваш план тренировок</h1>
-            <p className="text-[var(--color-muted)]">
-              Версия {plan.version} · Создан {formatDate(plan.createdAt)}
-            </p>
-          </div>
-          <Button variant="secondary" className="gap-2"
-            onClick={async()=>await generatePlan()}>
-            <RefreshCcw className="w-4 h-4"/>
-            Сгенерировать план ещё раз
-          </Button>
-        </div>
+        {!isGenerating ? (
+          <>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+              <div>
+                <h1 className="text-3xl font-bold-mb-1">Ваш план тренировок</h1>
+                <p className="text-[var(--color-muted)]">
+                  Версия {plan.version} · Создан {formatDate(plan.createdAt)}
+                </p>
+              </div>
+              <Button variant="secondary" className="gap-2"
+                onClick={handleRegenerate}>
+                <RefreshCcw className="w-4 h-4"/>
+                Сгенерировать план ещё раз
+              </Button>
+            </div>
 
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
-          <Card variant="bordered" className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Target className="w-5 h-5 text-[var(--color-accent)]"/>
+            <div className="grid md:grid-cols-4 gap-4 mb-8">
+              <Card variant="bordered" className="flex items-center gap-3">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-[var(--color-accent)]"/>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--color-muted)]">Goal</p>
+                  <p className="font-medium text-sm">{plan.overview.goal}</p>
+                </div>
+              </Card>
+              <Card variant="bordered" className="flex items-center gap-3">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-[var(--color-accent)]"/>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--color-muted)]">Frequency</p>
+                  <p className="font-medium text-sm">{plan.overview.frequency}</p>
+                </div>
+              </Card>
+              <Card variant="bordered" className="flex items-center gap-3">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <Dumbbell className="w-5 h-5 text-[var(--color-accent)]"/>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--color-muted)]">Split</p>
+                  <p className="font-medium text-sm">{plan.overview.split}</p>
+                </div>
+              </Card>
+              <Card variant="bordered" className="flex items-center gap-3">
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-[var(--color-accent)]"/>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--color-muted)]">Version</p>
+                  <p className="font-medium text-sm">{plan.version}</p>
+                </div>
+              </Card>
             </div>
-            <div>
-              <p className="text-xs text-[var(--color-muted)]">Goal</p>
-              <p className="font-medium text-sm">{plan.overview.goal}</p>
-            </div>
-          </Card>
-          <Card variant="bordered" className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-[var(--color-accent)]"/>
-            </div>
-            <div>
-              <p className="text-xs text-[var(--color-muted)]">Frequency</p>
-              <p className="font-medium text-sm">{plan.overview.frequency}</p>
-            </div>
-          </Card>
-          <Card variant="bordered" className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Dumbbell className="w-5 h-5 text-[var(--color-accent)]"/>
-            </div>
-            <div>
-              <p className="text-xs text-[var(--color-muted)]">Split</p>
-              <p className="font-medium text-sm">{plan.overview.split}</p>
-            </div>
-          </Card>
-          <Card variant="bordered" className="flex items-center gap-3">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-[var(--color-accent)]"/>
-            </div>
-            <div>
-              <p className="text-xs text-[var(--color-muted)]">Version</p>
-              <p className="font-medium text-sm">{plan.version}</p>
-            </div>
-          </Card>
-        </div>
 
-        <Card variant="bordered" className="mb-8">
-          <h2 className="font-semibold text-lg mb-2">Заметки ИИ</h2>
-          <p className="text-[var(--color-muted)] text-sm leading-relaxed">
-            {plan.overview.notes}
-          </p>
-        </Card>
+            <Card variant="bordered" className="mb-8">
+              <h2 className="font-semibold text-lg mb-2">Заметки ИИ</h2>
+              <p className="text-[var(--color-muted)] text-sm leading-relaxed">
+                {plan.overview.notes}
+              </p>
+            </Card>
 
-        <h2 className="font-semibold text-xl mb-4">Недельное расписание</h2>
-        <PlanDisplay weeklySchedule={plan.weeklySchedule}/>
+            <h2 className="font-semibold text-xl mb-4">Недельное расписание</h2>
+            <PlanDisplay weeklySchedule={plan.weeklySchedule}/>
 
-        <Card variant="bordered" className="mb-8">
-          <h2 className="font-semibold text-lg mb-2">Стратегия прогресса</h2>
-          <p className="text-[var(--color-muted)] text-sm leading-relaxed">
-            {plan.progression}
-          </p>
-        </Card>
+            <Card variant="bordered" className="mb-8">
+              <h2 className="font-semibold text-lg mb-2">Стратегия прогресса</h2>
+              <p className="text-[var(--color-muted)] text-sm leading-relaxed">
+                {plan.progression}
+              </p>
+            </Card>
+        </> ) : (
+            <Card 
+              variant="bordered"
+              className="text-center py-16">
+              <Loader2  className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-6 animate-spin"/>
+              <h1 className="text-2xl font-bold mb-2">
+                  Создание вашего плана
+              </h1>
+              <p className="text-[var(--color-muted)]">
+                Наш ИИ персонализирован и составляет ваш план индивидуальных тренировок...
+              </p>
+            </Card>
+          )}
       </div>
     </div>
   )
