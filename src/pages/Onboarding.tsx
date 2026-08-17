@@ -10,45 +10,45 @@ import type { UserProfile } from "../types";
 import { useNavigate } from "react-router-dom";
 
 const goalOptions = [
-  {value:"bulk", label:"Build Muscle (Bulk)"},
-  {value:"cut", label:"Lose Fat (Cut)"},
-  {value:"recomp", label:"Body Recomposition"}, 
-  {value:"strength", label:"Build Strength"},
-  {value:"endurance", label:"Improve Endurance"},
+  { value: "bulk", label: "Набор мышечной массы (массонабор)" },
+  { value: "cut", label: "Сжигание жира (сушка)" },
+  { value: "recomp", label: "Рекомпозиция тела" },
+  { value: "strength", label: "Развитие силы" },
+  { value: "endurance", label: "Повышение выносливости" },
 ];
 
 const experienceOptions = [
-  {value:"beginner", label:"Beginner (0-1 years)"},
-  {value:"intermediate", label:"Intermediate (1-3 years)"},
-  {value:"advanced", label:"Advanced (3+ years)"},
+  { value: "beginner", label: "Новичок (0–1 год)" },
+  { value: "intermediate", label: "Средний уровень (1–3 года)" },
+  { value: "advanced", label: "Продвинутый (3+ лет)" },
 ];
 
-const daysOptions=[
-  {value: "2", label: "2 days/week"},
-  {value: "3", label: "3 days/week"},
-  {value: "4", label: "4 days/week"},
-  {value: "5", label: "5 days/week"},
-  {value: "6", label: "6 days/week"},
+const daysOptions = [
+  { value: "2", label: "2 дня в неделю" },
+  { value: "3", label: "3 дня в неделю" },
+  { value: "4", label: "4 дня в неделю" },
+  { value: "5", label: "5 дней в неделю" },
+  { value: "6", label: "6 дней в неделю" },
 ];
 
-const sessionOptions=[
-  {value: "30", label: "30 minutes"},
-  {value: "45", label: "45 minutes"},
-  {value: "60", label: "60 minutes"},
-  {value: "90", label: "90 minutes"},
+const sessionOptions = [
+  { value: "30", label: "30 минут" },
+  { value: "45", label: "45 минут" },
+  { value: "60", label: "60 минут" },
+  { value: "90", label: "90 минут" },
 ];
 
-const equipmentOptions=[
-  {value: "home", label: "Home Gym"},
-  {value: "dumbbells", label: "Dumbbells Only"},
-  {value: "full", label: "Full Gym Access"},
+const equipmentOptions = [
+  { value: "home", label: "Домашний зал" },
+  { value: "dumbbells", label: "Только гантели" },
+  { value: "full", label: "Полноценный тренажёрный зал" },
 ];
 
-const splitOptions=[
-  {value: "fullbody", label: "Full Body"},
-  {value: "upperlower", label: "Upper/Lower Split"},
-  {value: "ppl", label: "Push/Pull/Legs Split"},
-  {value: "custom", label: "Let AI Decide"},
+const splitOptions = [
+  { value: "fullbody", label: "Фулбоди (на всё тело)" },
+  { value: "upperlower", label: "Сплит: Верх / Низ" },
+  { value: "ppl", label: "Сплит: Жим / Тяга / Ноги (PPL)" },
+  { value: "custom", label: "Доверить выбор ИИ" },
 ];
 
 export default function Onboarding() {

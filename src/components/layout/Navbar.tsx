@@ -12,7 +12,7 @@ export default function Navbar() {
               to="/"
               className="flex items-center gap-2 text-[var(--color-foreground)]">
                 <Dumbbell className="w-6 h-6 text-[var(--color-accent)]" />
-                <span className="font-semibold text-lg">Gym AI Planner</span>
+                <span className="font-semibold text-lg">Нейропланировщик</span>
             </Link>
 
             <nav>
@@ -20,7 +20,7 @@ export default function Navbar() {
                     <>
                     <Link to="/profile">
                         <Button variant="ghost" size="sm">
-                            My Plan
+                            Мой план
                         </Button>
                     </Link>
                     <UserButton className="bg-(--color-accent)"/>
@@ -29,11 +29,13 @@ export default function Navbar() {
                     <>
                         <Link to="/auth/sign-in">
                             <Button variant="ghost" size="sm">
-                                Sign In
+                                Авторизация
                             </Button>
                         </Link>
                         <Link to="/auth/sign-up">
-                            <Button size="sm">Sign Up</Button>
+                            <Button size="sm">
+                                Регистрация
+                            </Button>
                         </Link>
                     </>
                 )}
